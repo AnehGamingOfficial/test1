@@ -89,13 +89,16 @@
     <button id='add' onclick='addNewPair()'>add new key-value pair</button>
     <button id='objComplete' onclick='addToJSON()'>add object to list</button>
     <button id='download' onclick='getJSON()'>download JSON file</button><input id='fileName' type='text' placeholder='type file name here' />
-    <div id='options'>
+     <div id='options'>
         <div class='pair'>
             <div class='keyArea'>
                 <label>key name:</label>
                 <input class='key' type='text'>
             </div>
-            <textarea class='value'></textarea>
+            <div class='value-container'>
+                <textarea class='value'></textarea>
+                <input type='hidden' class='locked-value'>
+            </div>
             <button class='lock' onclick='toggleLock(this)'>lock value</button>
         </div>
     </div>
