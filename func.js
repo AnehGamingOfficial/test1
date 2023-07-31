@@ -5,7 +5,6 @@ var currentObjEdit; //this will hold the number id of the object being edited
 var JSONarray = [];
 
 //make new key-value pair
-
 function addNewPair(){
 	var options = document.getElementById('options');
 	
@@ -47,26 +46,62 @@ function addNewPair(){
 
 ***/
 function addToJSON(){
- var newObject = {};
-    var pairs = document.querySelectorAll('.pair');
+	
+	// prevent adding a blank object!
+	// if any key fields are blank, simply return and don't do anything 
+	// for input elements, skip the first one since it's for naming the file to save
+	// the rest will correspond to key names 
+	// it's okay to allow for values to be empty
+	var allInputElements = document.getElementsByTagName("input");
+	for(var i = 1; i < allInputElements.length; i++){
+		if(allInputElements[i].value === ""){
+			return;
+		}
+	}
+	
+	//look through all key-value pair children in #options
+	var children = document.getElementById('options').childNodes;
+	var newObject = {};
+	
+	for(var i = 0; i < children.length; i++){
+		
+		if(children[i].className === "pair"){			
 
-    for (var i = 0; i < pairs.length; i++) {
-        var keyInput = pairs[i].querySelector('.key');
-        var valueTextArea = pairs[i].querySelector('.value');
-        var lockedValueInput = pairs[i].querySelector('.locked-value');
-        
-        var key = keyInput.value;
-        var value = valueTextArea.disabled ? lockedValueInput.value : valueTextArea.value;
+			// note!! these indices (the 3 and 1) are specific to this implementation. it seems like for children nodes,
+			// elements are separated by a 'text' node. so i.e. 
+			// for #pair, there is a div and a text area. but the child nodes for #pair are actually text, div, text, textarea. 
+			// this is only true for the first div though because every other pair is inserted into the DOM dynamically! see this:
+			// https://stackoverflow.com/questions/24589908/childnode-of-li-element-gives-text-ul-ul-text
+			var key;
+			var keyValue;
+			for(var j = 0; j < children[i].childNodes.length; j++){
 
-        if (key.trim() !== '') {
-            newObject[key] = value;
-        }
-    }
-
-    JSONarray.push(JSON.stringify(newObject));
-    addObjectToDisplay(newObject);
-    count++;
-    clearData();
+				if(children[i].childNodes[j].className === "keyArea"){
+					
+					//get key
+					if(i === 1){
+						key = (children[i].childNodes[j].childNodes[3]).value;
+					}else{
+						key = (children[i].childNodes[j].childNodes[1]).value;
+					}
+				
+				}else if(children[i].childNodes[j].className === "value"){
+					//get value
+					keyValue = children[i].childNodes[j].value;
+				}
+			}
+			newObject[key] = keyValue;
+		}
+	}
+	//important to stringify here!
+	JSONarray.push(JSON.stringify(newObject));
+	
+	//show new object in designated area
+	addObjectToDisplay(newObject);
+	count++;
+	
+	//console.log(newObject);
+	clearData();
 }
 
 function clearData(){
@@ -344,20 +379,4 @@ function hideSave(){
 	if(document.getElementById('whichObject')){
 		document.getElementById('whichObject').remove();
 	}
-}
-
-function toggleLock(lockButton) {
-    var valueFieldContainer = lockButton.parentElement.querySelector('.value-container');
-    var valueTextArea = valueFieldContainer.querySelector('.value');
-    var lockedValueInput = valueFieldContainer.querySelector('.locked-value');
-
-    if (valueTextArea.disabled) {
-        valueTextArea.disabled = false;
-        lockButton.textContent = 'lock value';
-        lockedValueInput.value = valueTextArea.value;
-    } else {
-        valueTextArea.disabled = true;
-        lockButton.textContent = 'unlock value';
-        valueTextArea.value = lockedValueInput.value;
-    }
 }
