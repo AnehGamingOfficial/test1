@@ -5,6 +5,7 @@ var currentObjEdit; //this will hold the number id of the object being edited
 var JSONarray = [];
 
 //make new key-value pair
+
 function addNewPair(){
 	var options = document.getElementById('options');
 	
@@ -379,4 +380,9 @@ function hideSave(){
 	if(document.getElementById('whichObject')){
 		document.getElementById('whichObject').remove();
 	}
+}
+
+function toggleLock(lockButton) {
+    var valueField = lockButton.parentElement.querySelector('.value');
+    valueField.disabled = !valueField.disabled;
 }
