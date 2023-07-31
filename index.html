@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
 	<meta charset='UTF-8'>
 	<script src="func.js"></script>
 	<title> basic JSON generator </title>
 </head>
-
 <style>
 .pair{
 	margin-top: 2%;
@@ -64,22 +61,17 @@ a{
 	color: #000;
 }
 </style>
-
 <body>
-
 <h2 id='title'> basic JSON generator </h2>
 <p id='about'><a href='https://github.com/syncopika/basic-JSON-generator'> source </a></p>
 <p> generate a simple JSON file for multiple objects with any number of key-value pairs. </p>
 <p>If a value is particularly long (i.e. multiple paragraphs), no need to worry about having to type it all on one line! </p>
-
 <br>
 <p> after editing key-value pairs, press 'add object to list' to add the data as one new object to the JSON array </p>
 <button id='add' onclick='addNewPair()'>add new key-value pair </button>
 <button id='objComplete' onclick='addToJSON()'>add object to list</button>
 <button id='download' onclick='getJSON()'>download JSON file</button><input id='fileName' type='text' placeholder='type file name here' />
-
 <div id='options'>
-
 	<div class='pair'>
 		<div class='keyArea'>
 			<label> key name: </label> 
@@ -87,20 +79,12 @@ a{
 		</div>
 		<textarea class='value'></textarea>
 	</div>
-	
 </div>
-
 <button id='save' class='save' onclick='saveNewData(this.id)'>save?</button>
-
 <hr>
 <h3> current objects in JSON file: </h3>
 <p> click on the 'key' to see its corresponding value </p>
-
 <div id='currentObjects'>
 </div>
-
-
 </body>
-
-
 </html>
