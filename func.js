@@ -384,5 +384,11 @@ function hideSave(){
 
 function toggleLock(lockButton) {
     var valueField = lockButton.parentElement.querySelector('.value');
-    valueField.disabled = !valueField.disabled;
+    if (valueField.disabled) {
+        valueField.disabled = false;
+        lockButton.textContent = 'lock value';
+    } else {
+        valueField.disabled = true;
+        lockButton.textContent = 'unlock value';
+    }
 }
